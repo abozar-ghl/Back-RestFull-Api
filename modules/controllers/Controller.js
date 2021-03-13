@@ -10,13 +10,15 @@ module.exports = class Controller {
 
     //برای نمایش با جزئیات ارورهای برگشتی
     showValidationErrors(req , res ) {
+        console.log(req.validationErrors())
         let errors = req.validationErrors();
         if(errors) {
             res.status(422).json({
                 message : errors.map(error => {
                     return {
                         'field' : error.param,
-                        'message' : error.msg
+                        'message' : error.msg,
+                        // 'email' : error.msg
                     }
                 }),
                 success : false

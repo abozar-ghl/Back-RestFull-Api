@@ -4,10 +4,10 @@ const timestamps = require('mongoose-timestamp');
 const bcrypt = require('bcrypt');
 
 const UserSchema = new Schema({
-    firstname : { type : String , required : true} ,
-    lasttname : { type : String , required : false} ,
-    email : { type : String , required : true , unique : true} ,
-    password : { type : String , required : true} ,
+    firstname : { type : String } ,
+    lastname : { type : String } ,
+    email : { type : String  , unique : true} ,
+    password : { type : String } ,
     // type : { type : String , default : 'user'},
     // courses : [{ type : Schema.Types.ObjectId , ref : 'Course'}]
 });
@@ -21,5 +21,24 @@ UserSchema.pre('save' , function(next) {
         next();
     });
 })
+
+
+// const UserSchema = mongoose.model(
+//     'User',
+//     new mongoose.Schema({
+//         firstname: String,
+//         lastname: String,
+//         email: String,
+//         password: String,
+//         roles: [
+//             {
+//                 type: mongoose.Schema.Types.ObjectId,
+//                 ref: 'Role'
+//             }
+//         ]
+//     })
+// );
+
+
 
 module.exports = mongoose.model('User' , UserSchema);

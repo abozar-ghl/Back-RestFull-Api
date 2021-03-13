@@ -4,21 +4,22 @@ const bcrypt = require('bcrypt');
 
 module.exports = new class AuthController extends Controller {
 
-    register(req , res) {  
-        // req.checkBody('firstname' , 'وارد کردن فیلد نام الزامیست').notEmpty();
-        // req.checkBody('lastname' , 'وارد کردن فیلد نام خانوادگی الزامیست').notEmpty();
-        // req.checkBody('email' , 'وارد کردن فیلد ایمیل الزامیست').notEmpty();
-        // req.checkBody('password' , 'وارد کردن فیلد پسورد الزامیست').notEmpty();
-        // req.checkBody('email' , 'فرمت اییمل وارد شده صحیح نیست').isEmail();
+    register(req , res) {  console.log(req)
+        req.checkBody('data.firstname' , 'وارد کردن فیلد نام الزامیست').notEmpty();
+        req.checkBody('data.lastname' , 'وارد کردن فیلد نام خانوادگی الزامیست').notEmpty();
+        req.checkBody('data.email' , 'وارد کردن فیلد ایمیل الزامیست').notEmpty();
+        req.checkBody('data.password' , 'وارد کردن فیلد پسورد الزامیست').notEmpty();
+        req.checkBody('data.email' , 'فرمت اییمل وارد شده صحیح نیست').isEmail();
         
-        // if(this.showValidationErrors(req, res)) 
-        //     return;
+        if(this.showValidationErrors(req, res)) 
+            return;
 
+            console.log(req.body)
         this.model.User({
-            firstname : req.body.firstname,
-            lastname : req.body.lastname,
-            email : req.body.email,
-            password : req.body.password
+            firstname : req.body.data.firstname,
+            lastname : req.body.data.lastname,
+            email : req.body.data.email,
+            password : req.body.data.password
         }).save(err => {
             if(err) {
                 if(err.code == 11000) {
