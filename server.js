@@ -13,7 +13,6 @@ mongoose.Promise = global.Promise;
 //Cors
 
 
-
 app.use(bodyParser.urlencoded({ extended : false }));    //نوع ارسال اطلاعات مثلا فرم دیتا یا ...
 app.use(bodyParser.json({ type : 'application/json' }));   
 app.use(expressValidator());

@@ -5,8 +5,7 @@ const bcrypt = require('bcrypt');
 module.exports = new class AuthController extends Controller {
 
     register(req , res) {  console.log(req)
-        req.checkBody('data.firstname' , 'وارد کردن فیلد نام الزامیست').notEmpty();
-        req.checkBody('data.lastname' , 'وارد کردن فیلد نام خانوادگی الزامیست').notEmpty();
+        req.checkBody('data.username' , 'وارد کردن فیلد نام الزامیست').notEmpty();
         req.checkBody('data.email' , 'وارد کردن فیلد ایمیل الزامیست').notEmpty();
         req.checkBody('data.password' , 'وارد کردن فیلد پسورد الزامیست').notEmpty();
         req.checkBody('data.email' , 'فرمت اییمل وارد شده صحیح نیست').isEmail();
@@ -16,10 +15,10 @@ module.exports = new class AuthController extends Controller {
 
             console.log(req.body)
         this.model.User({
-            firstname : req.body.data.firstname,
-            lastname : req.body.data.lastname,
+            username : req.body.data.username,
             email : req.body.data.email,
-            password : req.body.data.password
+            password : req.body.data.password ,
+            reffer_id : req.body.data.reffer_id
         }).save(err => {
             if(err) {
                 if(err.code == 11000) {

@@ -4,10 +4,10 @@ const timestamps = require('mongoose-timestamp');
 const bcrypt = require('bcrypt');
 
 const UserSchema = new Schema({
-    firstname : { type : String } ,
-    lastname : { type : String } ,
-    email : { type : String  , unique : true} ,
-    password : { type : String } ,
+    username : { type : String , required : true , unique : true} ,
+    email : { type : String , required : true , unique : true} ,
+    password : { type : String , required : true} ,
+    reffer_id : { type : String } ,
     // type : { type : String , default : 'user'},
     // courses : [{ type : Schema.Types.ObjectId , ref : 'Course'}]
 });
@@ -20,13 +20,17 @@ UserSchema.pre('save' , function(next) {
         this.password = hash;
         next();
     });
+
+    // createRefIdForUser(this.email , 10 , (err , hash)=>{
+    // میتونه تو مرحله وریفای شدن ساخته بشه
+    // })
 })
 
 
 // const UserSchema = mongoose.model(
 //     'User',
 //     new mongoose.Schema({
-//         firstname: String,
+//         username: String,
 //         lastname: String,
 //         email: String,
 //         password: String,
