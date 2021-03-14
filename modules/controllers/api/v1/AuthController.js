@@ -1,6 +1,7 @@
 const Controller = require(`${config.path.controller}/Controller`);
 const UserTransform = require(`${config.path.transform}/v1/UserTransform`);
 const bcrypt = require('bcrypt');
+const { json } = require('body-parser');
 
 module.exports = new class AuthController extends Controller {
 
@@ -39,6 +40,8 @@ module.exports = new class AuthController extends Controller {
     }
 
     login(req , res) {
+        // console.log('reqqqqqqqq>' + req  )
+        console.log('reqqqqqqqq>' + req.body.email )
         req.checkBody('email' , 'وارد کردن فیلد ایمیل الزامیست').notEmpty();
         req.checkBody('password' , 'وارد کردن فیلد پسورد الزامیست').notEmpty();
 
@@ -54,6 +57,7 @@ module.exports = new class AuthController extends Controller {
                     success : false
                 });
 
+            
             bcrypt.compare(req.body.password , user.password , (err , status) => {
 
                 if(! status) 
@@ -65,7 +69,8 @@ module.exports = new class AuthController extends Controller {
 
                 return res.json({
                     data : new UserTransform().transform(user,true),
-                    success : true
+                    success : true ,
+                    profile : {firstname : 'mr' , lastname : 'navas' }
                 });  
             })
         })

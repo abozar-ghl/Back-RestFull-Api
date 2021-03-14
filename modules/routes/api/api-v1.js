@@ -23,6 +23,8 @@ router.get('/version' , HomeController.version);
 router.post('/login' , AuthController.login.bind(AuthController));
 router.post('/register' , AuthController.register.bind(AuthController));
 router.get('/user' , apiAuth , UserController.index.bind(UserController))
+router.get('/profile' , apiAuth , UserController.profile.bind(UserController))
+
 
 router.get('/courses' , CourseController.index.bind(CourseController))
 router.get('/episodes/:id' , EpisodeController.single.bind(EpisodeController))

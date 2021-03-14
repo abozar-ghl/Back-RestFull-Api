@@ -25,4 +25,20 @@ module.exports = new class UserController extends Controller {
             })
         }
     }
+
+    profile(req, res) {
+        res.status(200).json({
+            success: true,
+            profile:  {
+                email: 'a@test.com',
+                firstname: 'mr',
+                lastname: 'nvs'
+              },
+            data:  {
+            email: 'a@test.com',
+            firstname: 'mr',
+            lastname: 'nvs'
+            }
+          })
+    }
 }

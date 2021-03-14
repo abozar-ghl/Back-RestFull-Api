@@ -1,9 +1,10 @@
+const { json } = require('body-parser');
 const jwt = require('jsonwebtoken');
 const User = require(`${config.path.model}/user`);
 
 module.exports = (req , res , next) =>  {
-    let token = req.body.token || req.query.token || req.headers['x-access-token'];
-
+    let token = req.body.token || req.query.token || req.headers['x-access-token'] ;
+// console.log('apiAuth>>>' + token)
     if(token) {
         return jwt.verify(token , config.secret , (err , decode ) => {
             if(err) {
