@@ -20,57 +20,67 @@ module.exports = new class AuthController extends Controller {
             email : req.body.data.email,
             password : req.body.data.password ,
             reffer_id : req.body.data.reffer_id
-        }).save(err => {
-            if(err) {
-                if(err.code == 11000) {
-                    return res.json({
-                        data : 'ایمیل نمی تواند تکراری باشد',
-                        success : false
-                    })
-                } else {
-                    throw err;
-                }
-            }
+        }).save(err => {   console.log( 'err'); console.log( err)
+                            if(err) {
+                                if(err.code == 11000) {   console.log( 'err11000'); console.log( err.code)
+                                    return res.json({
+                                        success : false ,
+                                        Error : 'ایمیل نمی تواند تکراری باشد'
+                                    })
+                                } else {
+                                    // throw err;
+                                    return res.json({
+                                        success : false ,
+                                        Error : 'خطای ناشناس در ثبت نام'
+                                    })
+                                }
+                            }
 
-            return res.json({
-                data : 'کاربر با موفقیت عضو وبسایت شد',
-                success : true
-            });
+                return res.json({
+                    success : true ,
+                    data : 'کاربر با موفقیت عضو وبسایت شد'
+                });
         })
     }
 
     login(req , res) {
-        // console.log('reqqqqqqqq>' + req  )
-        console.log('reqqqqqqqq>' + req.body.email )
+
         req.checkBody('email' , 'وارد کردن فیلد ایمیل الزامیست').notEmpty();
         req.checkBody('password' , 'وارد کردن فیلد پسورد الزامیست').notEmpty();
 
         if(this.showValidationErrors(req, res)) 
             return;
 
+            console.log('reqqqqqqqq>' + req  )
+            console.log('reqqqqqqqq>' + req.body.email )
         this.model.User.findOne({ email : req.body.email } , (err , user) => {
             if(err) throw err;
 
             if(user == null) 
                 return res.status(422).json({
-                    data : 'اطلاعات وارد شده صحیح نیست',
-                    success : false
+                    success : false ,
+                    Error : 'اطلاعات وارد شده صحیح نیست'
+                    
                 });
 
             
             bcrypt.compare(req.body.password , user.password , (err , status) => {
-
+                console.log(user)
                 if(! status) 
-                    return res.status(422).json({
+                // return res.status(422).json({
+                return res.json({
                         success : false,
-                        data : 'پسورد وارد شده صحیح نمی باشد'
+                        Error : 'پسورد وارد شده صحیح نمی باشد'
                     })
               
-
+                
                 return res.json({
-                    data : new UserTransform().transform(user,true),
                     success : true ,
-                    profile : {firstname : 'mr' , lastname : 'navas' }
+                    data : new UserTransform().transform(user,true),
+                    profile : {   
+                        firstname : user.firstname ,
+                        lastname : user.lastname 
+                    }
                 });  
             })
         })
