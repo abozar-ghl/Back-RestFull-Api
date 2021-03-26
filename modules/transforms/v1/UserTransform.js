@@ -12,6 +12,9 @@ module.exports = class UserTransform extends Transform {
         }
     }
 
+
+    
+
     withToken(item) {
         if(item.token) 
             return { token : item.token}
@@ -19,7 +22,7 @@ module.exports = class UserTransform extends Transform {
         if(this.createToken) {
          
             let token = jwt.sign({ user_id : item._id } , config.secret , {
-                expiresIn :  '1h',
+                expiresIn :  '10h',
             });
 
             return { token }

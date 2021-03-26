@@ -2,10 +2,11 @@
 const Course = require(`${config.path.model}/course`);
 const Episode = require(`${config.path.model}/episode`);
 const User = require(`${config.path.model}/user`);
+const Users_verifys = require(`${config.path.model}/verify`);
 
 module.exports = class Controller {
     constructor() {
-        this.model = { Course , Episode , User }
+        this.model = { Course , Episode , User , Users_verifys }
     }
 
     //برای نمایش با جزئیات ارورهای برگشتی

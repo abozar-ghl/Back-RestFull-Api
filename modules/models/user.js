@@ -4,10 +4,15 @@ const timestamps = require('mongoose-timestamp');
 const bcrypt = require('bcrypt');
 
 const UserSchema = new Schema({
+    firstname : { type : String , default : "x"} ,
+    lastname : { type : String , default : "x"} ,
     username : { type : String , required : true , unique : true} ,
     email : { type : String , required : true , unique : true} ,
     password : { type : String , required : true} ,
     reffer_id : { type : String } ,
+    // verify_id : { type : String } ,
+    verify :[ { type : Schema.Types.ObjectId  , ref : 'Users_verifys'}]
+
     // type : { type : String , default : 'user'},
     // courses : [{ type : Schema.Types.ObjectId , ref : 'Course'}]
 });

@@ -17,6 +17,7 @@ const UserController = require(`${ControllerApi}/v1/UserController`);
 // AdminController
 const AdminCourseController = require(`${ControllerApi}/v1/admin/CourseController`);
 const AdminEpisodeController = require(`${ControllerApi}/v1/admin/EpisodeController`);
+const AdminUserController = require(`${ControllerApi}/v1/admin/UserController`);   // 
 
 router.get('/' , HomeController.index);
 router.get('/version' , HomeController.version);
@@ -24,6 +25,8 @@ router.post('/login' , AuthController.login.bind(AuthController));
 router.post('/register' , AuthController.register.bind(AuthController));
 router.get('/user' , apiAuth , UserController.index.bind(UserController));
 router.get('/profile' , apiAuth , UserController.profile.bind(UserController));
+router.get('/verifystatus' , apiAuth , UserController.verifystatus.bind(UserController));
+router.get('/handleReqList' , apiAuth , UserController.handleReqList.bind(UserController));
 
 
 router.get('/courses' , CourseController.index.bind(CourseController))
@@ -46,6 +49,14 @@ adminRouter.post('/epsiodes' , AdminEpisodeController.store.bind(AdminEpisodeCon
 adminRouter.put('/epsiodes/:id' , AdminEpisodeController.update.bind(AdminEpisodeController));
 adminRouter.delete('/epsiodes/:id' , AdminEpisodeController.destroy.bind(AdminEpisodeController));
 
-router.use('/admin' , apiAuth , apiAdmin , adminRouter);
+// router.use('/admin' , apiAuth , apiAdmin , adminRouter);
+router.use('/admin'  , adminRouter);
+
+
+
+
+//1- put  localhost:8080/api/v1/admin/users/verify    req.body{ fields }    برای تایید اهراز هویت کاربر
+adminRouter.put('/users/verify' , AdminUserController.updateUserVerify.bind(AdminUserController));     //admin update user verify 
+
 
 module.exports = router;
