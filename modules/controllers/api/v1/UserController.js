@@ -4,9 +4,10 @@ const Controller = require(`${config.path.controller}/Controller`);
 const UserTransform = require(`${config.path.transform}/v1/UserTransform`);
 const User = require(`${config.path.model}/user`);
 const Users_verifys = require(`${config.path.model}/verify`);
-const Admin_alerts = require(`${config.path.model}/admin_alerts`);
+const Admin_alerts  = require(`${config.path.model}/admin_alerts`);
 
 module.exports = new class UserController extends Controller {
+    self = this ;
     index(req , res) {
         return res.json({
             data : new UserTransform().transform(req.user)
@@ -142,15 +143,127 @@ module.exports = new class UserController extends Controller {
           })
     }
 
+    // var object = arr.reduce((obj, item) => (obj[item.key] = item.value, obj) ,{});
 
-    async handleReqList(req, res) {               
+    async adminalerts(req, res) {               
+       console.log("res user adminalerts" )
+
+        await Admin_alerts.find({} , (err , alerts) => { 
+            console.log("alerts" +  JSON.stringify(alerts));
+                // req.adminalerts = alerts.reduce((obj, item) => (obj[item.key] = item.value, obj) ,{}); 
+                // req.adminalerts = alerts.reduce((obj,item)=>{obj[item.key] = item.value; return obj;} ,{}); 
+                // req.adminalerts = alerts.reduce((obj)=>{ obj   } , {} ); 
+
+                // let alt = {};
+                // alt =  { ...alerts}
+                // req.adminalerts = alt;
+                req.adminalerts = alerts;
+
+                // req.adminalerts = alerts.reduce((obj) => {    return {  ...obj   }  , {} })
+                // console.log( alerts.reduce( (obj) =>{ return { ...obj } }))
+
+        })
+
+       
+        console.log("req.adminalerts");
+        console.log(req.adminalerts);
+        console.log(JSON.stringify(req.adminalerts));
+
+        res.status(200).json({     
+            success: true,
+
+            adminalerts: req.adminalerts
+                // priority: req.adminalerts.priority,
+                // head: req.adminalerts.head ,
+                // body: req.adminalerts.body 
+                // tell: req.adminalerts.tell ,
+
+                // "_id" : ObjectId("605ef46a432118ef7590b377"),
+                // "admin_name" : "abozar",
+                // "start_show" : "215421221",
+                // "end_show" : "321545221",
+                // "active_show" : true,
+                // "priority" : "red",
+                // "head" : "alert_head",
+                // "body" : "alert_body"
+
+           
+          })
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //  adminalerts(req, res) {               
+    //     // console.log("res user verifystatus" +JSON.stringify(req.user))
+    //     const alt={} ;
+    //       Admin_alerts.find({} , (err , alerts) => { 
+    //         //  console.log("alerts" +  JSON.stringify(alerts));
+    //          console.log("alerts" + alerts);
+    //              req.admalerts = alerts;  
+    //             //  alt.push(alerts);  
+    //         // return {alerts}
+                 
+    //      })
+ 
+    //     //  return alt;
+
+    //     //  console.log("req.alerts");
+    //     //  console.log(req.adminalerts);
+    //     //  console.log(JSON.stringify(req.adminalerts));
+         
+    //     //  return;
+    //      //  res.status(200).json({     
+    //     //      success: true,
+ 
+    //     //      adminalerts:  req.adminalerts 
+    //     //     //          {
+    //     //     //      firstname: req.verifyStatus.firstname,
+    //     //     //      lastname: req.verifyStatus.lastname 
+    //     //     //      // email: req.verifystatus.email ,
+    //     //     //      // tell: req.verifystatus.tell ,
+    //     //     //  }
+    //     //    })
+    //  }
+
+
+    handleReqList(req, res) {               
        console.log("req.ReqList" + JSON.stringify(req.ReqList))
-        
+    //    const admalerts = null ;
         const ObjReqList = req.ReqList ;
         for (var key in ObjReqList) {
             if (ObjReqList.hasOwnProperty(key)) {   // vojod darad ya na   mesle   obj.hasOwnProperty('nameProperty')
 
-                if (ObjReqList[key] == "admin_alerts" )  {   console.log(ObjReqList[key]);  }
+                if (ObjReqList[key] == "admin_alerts" )  {  
+                     console.log(ObjReqList[key]);
+                     console.log(this.self.adminalerts(req, res))
+                    //  this.adminalerts(req, res) .then((resault)=>{ console.log(resault[0]); this.admalerts=resault[0]; } )    
+                    //  console.log("req.adm"+ this.admalerts) ;
+                     console.log(req.admalerts) ;
+                    }
                 //   myObject[key] *= 2;
                 // onj ResList(key).insert   window["admin_alerts"] : mongo find
                 // onj ResList(key).insert   window[ObjReqList[key]] :  mongo find

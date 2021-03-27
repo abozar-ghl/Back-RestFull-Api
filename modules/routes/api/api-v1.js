@@ -26,6 +26,7 @@ router.post('/register' , AuthController.register.bind(AuthController));
 router.get('/user' , apiAuth , UserController.index.bind(UserController));
 router.get('/profile' , apiAuth , UserController.profile.bind(UserController));
 router.get('/verifystatus' , apiAuth , UserController.verifystatus.bind(UserController));
+router.get('/adminalerts' , apiAuth , UserController.adminalerts.bind(UserController));
 router.get('/handleReqList' , apiAuth , UserController.handleReqList.bind(UserController));
 
 
